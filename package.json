@@ -1,0 +1,23 @@
+{
+  "name": "monitoring-ts",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "npm run build && node dist/app.js",
+    "build": "tsc"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/node": "^14.0.14",
+    "@types/sequelize": "^4.28.9",
+    "@types/sqlite3": "^3.1.6",
+    "await-to-js": "^2.1.1",
+    "sequelize": "^6.2.4",
+    "sqlite3": "^5.0.0",
+    "typescript": "^3.9.6",
+    "watchr": "^6.4.0"
+  }
+}
