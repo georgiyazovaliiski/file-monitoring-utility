@@ -9,7 +9,7 @@ class LogsService{
         return ChangeLog.destroy({where:model})
     }
     public static async update(model:any) {
-        return ChangeLog.update({model},{where:{itemPath: model.itemPath}})
+        return ChangeLog.update({},{where:{itemPath: model.itemPath}})
     }
     public static async get(model:any) {
         return ChangeLog.findAll({where:model})

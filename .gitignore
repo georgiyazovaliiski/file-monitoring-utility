@@ -17,11 +17,17 @@ tmp
 # Build
 public/css/main.css
 
+# Processing Folder
+processes/*/**
+
 # Coverage reports
 coverage
 
 # API keys and secrets
 .env
+
+# DB File
+monitoring.sqlite
 
 # Dependency directory
 node_modules
@@ -41,5 +47,3 @@ dist/**/*
 
 # ignore yarn.lock
 yarn.lock
-
-.env

@@ -1,7 +1,11 @@
-import * as sqlite from 'sqlite3'
-const sql3 = sqlite.verbose();
 import {Sequelize} from 'sequelize'
 
-const sequelize = new Sequelize('sqlite::memory:')
+const sequelize = new Sequelize('monitoring', 'root', '', {
+    dialect: 'sqlite',
+    storage: process.cwd()+"/src/db/monitoring.sqlite", // or ':memory:'
+    dialectOptions: {
+        // Your sqlite3 options here
+    }
+})
 
 export default sequelize

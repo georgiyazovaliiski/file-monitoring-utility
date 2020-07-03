@@ -1,6 +1,5 @@
-
 const next = (err: Error) => {
-    if(err) return console.log('watch failed: ', err.message)
+    if(err) return console.error('watch failed: ', err.message)
     console.log('watch successful!')
 }
 
