@@ -1,34 +1,43 @@
 import LogsService from "../services/logsService";
+import ProcessingService from "../services/processingService";
+
+const updateLog = async (fullPath:any, currentStat:any, previousStat:any) => {
+    console.info(
+        'the file',
+        fullPath,
+        'was updated',
+        currentStat,
+        previousStat
+    )
+    await LogsService.update({itemPath:fullPath,itemName:fullPath.split('[/\\]').reverse()[0]})
+}
+
+const createLog = async (fullPath:any, currentStat:any) => {
+    // TODO: ASK WHETHER TO ADD TO QUEUE FOR PROCESSING ON RECEIVED FILE OR DIRECTLY INSERT INTO DB
+    ProcessingService.queue.push(fullPath)
+
+    const itemName = fullPath.split('/').reverse()[0]
+    const itemType = itemName.split('.').reverse()[0]
+
+    console.info('the file', fullPath, 'was created', currentStat)
+    await LogsService.add({itemPath:fullPath,itemName:itemName})
+}
+
+const deleteLog = async (fullPath:any,previousStat:any) => {
+    console.info('the file', fullPath, 'was deleted', previousStat)
+    await LogsService.remove({itemPath:fullPath})
+}
 
 const listener = async (changeType:any,fullPath:any,currentStat:any,previousStat:any) => {
     switch (changeType) {
         case 'update':
-            console.info(
-                'the file',
-                fullPath,
-                'was updated',
-                currentStat,
-                previousStat
-            )
-            await LogsService.update({itemPath:fullPath,itemName:fullPath.split('[/\\]').reverse()[0]})
+            await updateLog(fullPath,currentStat,previousStat)
             break
         case 'create':
-            const itemName = fullPath.split('/').reverse()[0]
-            const itemType = itemName.split('.').reverse()[0]
-
-            if(itemType == 'xml'){
-                // TODO: Parse xml and record post to blockchain?
-            }
-            if(itemType == 'pdf'){
-                // TODO: Process pdf
-            }
-
-            console.info('the file', fullPath, 'was created', currentStat)
-            await LogsService.add({itemPath:fullPath,itemName:itemName})
+            await createLog(fullPath,currentStat)
             break
         case 'delete':
-            console.info('the file', fullPath, 'was deleted', previousStat)
-            await LogsService.remove({itemPath:fullPath})
+            await deleteLog(fullPath,previousStat)
             break
     }
 

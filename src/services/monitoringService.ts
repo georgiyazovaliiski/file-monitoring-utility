@@ -4,9 +4,13 @@ import * as watchr from 'watchr'
 import Listener from "../monitoring/fileUtils";
 // @ts-ignore
 import Next from "../monitoring/errorHandler";
+import * as fs from "fs";
 
 class MonitoringService{
     public static start(path: string) {
+        if (!fs.existsSync(path)){
+            fs.mkdirSync(path);
+        }
         watchr.open(path, Listener, Next)
     }
 
