@@ -10,6 +10,8 @@ const updateLog = async (fullPath:any, currentStat:any, previousStat:any) => {
         previousStat
     )
     await LogsService.update({itemPath:fullPath,itemName:fullPath.split('[/\\]').reverse()[0]})
+
+    // TODO: SEND ALERTS, THE FILE WAS UPDATED, RUN IS INVALID NOW!
 }
 
 const createLog = async (fullPath:any, currentStat:any) => {

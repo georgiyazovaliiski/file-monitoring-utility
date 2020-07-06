@@ -5,7 +5,8 @@ const sequelize = new Sequelize('monitoring', 'root', '', {
     storage: process.cwd()+"/src/db/monitoring.sqlite",
     dialectOptions: {
         // Your sqlite3 options here
-    }
+    },
+    logging: false
 })
 
 export default sequelize

@@ -14,11 +14,13 @@
     "@types/node": "^14.0.14",
     "@types/sequelize": "^4.28.9",
     "@types/sqlite3": "^3.1.6",
+    "@types/xml-parser": "^1.2.29",
     "await-to-js": "^2.1.1",
     "dotenv": "^8.2.0",
     "sequelize": "^6.2.4",
     "sqlite3": "^5.0.0",
     "typescript": "^3.9.6",
-    "watchr": "^6.4.0"
+    "watchr": "^6.4.0",
+    "xml-parser": "^1.2.1"
   }
 }

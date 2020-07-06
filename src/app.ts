@@ -1,5 +1,3 @@
-import fs from "fs";
-
 require('dotenv').config()
 import MonitoringService from "./services/monitoringService";
 import Database from './db/database'
