@@ -16,6 +16,7 @@
     "@types/sqlite3": "^3.1.6",
     "@types/xml-parser": "^1.2.29",
     "await-to-js": "^2.1.1",
+    "better-queue": "^3.8.10",
     "dotenv": "^8.2.0",
     "sequelize": "^6.2.4",
     "sqlite3": "^5.0.0",

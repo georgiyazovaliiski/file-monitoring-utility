@@ -7,7 +7,7 @@ const monitoringDirectory = process.cwd()+process.env.FOLDER_PATH;
 
 
 (async () => {
-    await to(Database.sync())
+    await to(Database.sync({force:true}))
 
     await ProcessingService.init(monitoringDirectory)
 

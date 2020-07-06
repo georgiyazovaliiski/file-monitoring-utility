@@ -15,14 +15,11 @@ const updateLog = async (fullPath:any, currentStat:any, previousStat:any) => {
 }
 
 const createLog = async (fullPath:any, currentStat:any) => {
-    // TODO: ASK WHETHER TO ADD TO QUEUE FOR PROCESSING ON RECEIVED FILE OR DIRECTLY INSERT INTO DB
     ProcessingService.queue.push(fullPath)
 
     const itemName = fullPath.split('/').reverse()[0]
-    const itemType = itemName.split('.').reverse()[0]
 
     console.info('the file', fullPath, 'was created', currentStat)
-    await LogsService.add({itemPath:fullPath,itemName:itemName})
 }
 
 const deleteLog = async (fullPath:any,previousStat:any) => {

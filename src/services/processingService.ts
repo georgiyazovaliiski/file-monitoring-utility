@@ -2,9 +2,24 @@ import LogsService from "./logsService";
 import {ChangeLog} from "../models/changeLog";
 import * as fs from "fs";
 const parser = require("xml-parser");
+const Queue = require("better-queue")
 
 class ProcessingService {
-    public static queue:any[] = [];
+    public static queue:any[] = new Queue(async (input:any, cb:any) => {
+        try {
+            await ProcessingService.process(input)
+            cb(null,input)
+        }catch (e) {
+            cb(e,null)
+        }
+    }, {
+        retryDelay:1000,
+        id:'itemPath'
+    }).on("task_failed", () => {
+        console.log('Failed Task')
+    }).on("task_finish", () => {
+        console.log('Finished Task successfully')
+    });
 
     public static async init(monitoringDirectory:any) {
         console.info(`Initializing unprocessed queue from [${process.env.FOLDER_PATH}]`)
@@ -18,17 +33,12 @@ class ProcessingService {
         })
 
         function walk(monitoringDirectory:string) {
-            fs.readdirSync(monitoringDirectory).forEach((file: string) => {
+            fs.readdirSync(monitoringDirectory).forEach(async (file: string) => {
                 let directory = `${monitoringDirectory}/${file}`
-                try {
-                    walk(directory)
-                }
-                catch (e) {
-                    if (DBQueue.indexOf(directory) < 0){
-                        ProcessingService.queue.push(directory)
-                        LogsService.add({itemName:directory.split('/').reverse()[0],itemPath:directory})
-                        // ProcessingService.process()
-                    }
+
+                if (fs.lstatSync(directory).isDirectory()) walk(directory)
+                if (fs.lstatSync(directory).isFile() && DBQueue.indexOf(directory) < 0) {
+                    ProcessingService.queue.push(directory)
                 }
             })
         }
@@ -41,23 +51,19 @@ class ProcessingService {
         }
     }
 
-    public static async process(){
-        const fileDirectory = ProcessingService.queue.pop()
-
+    public static async process(fileDirectory:any){
         console.info(`Processing file [${fileDirectory}]`)
 
-        try {
-            const file = fs.readFileSync(fileDirectory, 'utf8');
-            const parsed = parser(file)
+        const file = fs.readFileSync(fileDirectory, 'utf8');
+        const parsed = parser(file)
 
-            console.info(`Sending data from [${fileDirectory}] to blockchain as a JSON`)
-            // TODO: Send parsed data to blockchain as a JSON
-        }
-        catch (e) {
-            console.error(`Could not process file [${fileDirectory}] - error: ${e.message}`)
-            console.info(`Enqueuing [${fileDirectory}] back in the process queue`)
-            ProcessingService.queue.push(fileDirectory)
-        }
+        console.info(`Sending data from [${fileDirectory}] to blockchain as a JSON`)
+
+        const itemName = fileDirectory.split('/').reverse()[0]
+
+        // TODO: Send parsed data to blockchain as a JSON
+
+        await LogsService.add({itemName:itemName, itemPath:fileDirectory})
     }
 }
 
