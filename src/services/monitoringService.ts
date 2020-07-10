@@ -8,9 +8,7 @@ import * as fs from "fs";
 
 class MonitoringService{
     public static start(path: string) {
-        if (!fs.existsSync(path)){
-            fs.mkdirSync(path);
-        }
+        if (!fs.existsSync(path)) fs.mkdirSync(path);
         watchr.open(path, Listener, Next)
     }
 

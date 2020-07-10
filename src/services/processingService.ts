@@ -66,9 +66,7 @@ class ProcessingService {
 
         const itemName = fileDirectory.split('/').reverse()[0]
 
-
         // TODO: Send parsed data to blockchain as a JSON
-
         await to(this.sendToBlockchain(parsed))
 
         await to(LogsService.add({itemName:itemName, itemPath:fileDirectory}))
