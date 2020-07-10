@@ -6,8 +6,10 @@ import ProcessingService from "./services/processingService";
 const monitoringDirectory = process.cwd()+process.env.FOLDER_PATH;
 
 
+// TODO: MIDDLEWARE CHECK FOR LOGGED USER
+
 (async () => {
-    await to(Database.sync({force:true}))
+    await to(Database.sync())
 
     await ProcessingService.init(monitoringDirectory)
 

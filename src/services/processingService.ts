@@ -1,6 +1,7 @@
 import LogsService from "./logsService";
 import {ChangeLog} from "../models/changeLog";
 import * as fs from "fs";
+import to from "await-to-js";
 const parser = require("xml-parser");
 const Queue = require("better-queue")
 
@@ -51,6 +52,10 @@ class ProcessingService {
         }
     }
 
+    public static async sendToBlockchain(XMLParsed:any){
+        // TODO: return awaited Blockchain transaction
+    }
+
     public static async process(fileDirectory:any){
         console.info(`Processing file [${fileDirectory}]`)
 
@@ -61,9 +66,12 @@ class ProcessingService {
 
         const itemName = fileDirectory.split('/').reverse()[0]
 
+
         // TODO: Send parsed data to blockchain as a JSON
 
-        await LogsService.add({itemName:itemName, itemPath:fileDirectory})
+        await to(this.sendToBlockchain(parsed))
+
+        await to(LogsService.add({itemName:itemName, itemPath:fileDirectory}))
     }
 }
 

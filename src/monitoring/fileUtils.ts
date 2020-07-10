@@ -12,6 +12,10 @@ const updateLog = async (fullPath:any, currentStat:any, previousStat:any) => {
     await LogsService.update({itemPath:fullPath,itemName:fullPath.split('[/\\]').reverse()[0]})
 
     // TODO: SEND ALERTS, THE FILE WAS UPDATED, RUN IS INVALID NOW!
+
+    // TODO: RECORD ALERT TO BLOCKCHAIN
+
+    // TODO: SETUP EMAIL SERVICE - SEND GRID JS
 }
 
 const createLog = async (fullPath:any, currentStat:any) => {
@@ -24,6 +28,13 @@ const createLog = async (fullPath:any, currentStat:any) => {
 
 const deleteLog = async (fullPath:any,previousStat:any) => {
     console.info('the file', fullPath, 'was deleted', previousStat)
+
+    // TODO: SEND ALERTS, THE FILE WAS UPDATED, RUN IS INVALID NOW!
+
+    // TODO: RECORD ALERT TO BLOCKCHAIN
+
+    // TODO: SETUP EMAIL SERVICE - SEND GRID JS
+
     await LogsService.remove({itemPath:fullPath})
 }
 
