@@ -1,11 +1,15 @@
 import LogsService from "../services/logsService";
 import ProcessingService from "../services/processingService";
+import {MailService} from "../services/mailService";
 
 const updateLog = async (fullPath:any, currentStat:any, previousStat:any) => {
     console.info(`The file [${fullPath}] was updated:`)
     await LogsService.update({itemPath:fullPath,itemName:fullPath.split('[/\\]').reverse()[0]})
 
     // TODO: SEND ALERTS, THE FILE WAS UPDATED, RUN IS INVALID NOW!
+
+    // TODO: Figure out what data is in PARSED object
+    await MailService.sendAlert('update')
 
     // TODO: RECORD ALERT TO BLOCKCHAIN
 
@@ -25,6 +29,8 @@ const deleteLog = async (fullPath:any,previousStat:any) => {
 
     // TODO: SEND ALERTS, THE FILE WAS UPDATED, RUN IS INVALID NOW!
 
+    // TODO: Figure out what data is in PARSED object
+    await MailService.sendAlert('delete')
     // TODO: RECORD ALERT TO BLOCKCHAIN
 
     // TODO: SETUP EMAIL SERVICE - SEND GRID JS

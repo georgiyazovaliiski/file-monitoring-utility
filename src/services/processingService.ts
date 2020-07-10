@@ -2,6 +2,7 @@ import LogsService from "./logsService";
 import {ChangeLog} from "../models/changeLog";
 import * as fs from "fs";
 import to from "await-to-js";
+import {MailService} from "./mailService";
 const parser = require("xml-parser");
 const Queue = require("better-queue")
 
@@ -68,6 +69,9 @@ class ProcessingService {
 
         // TODO: Send parsed data to blockchain as a JSON
         await to(this.sendToBlockchain(parsed))
+
+        // TODO: Figure out what data is in PARSED object
+        await to(MailService.sendSuccessful())
 
         await to(LogsService.add({itemName:itemName, itemPath:fileDirectory}))
     }
