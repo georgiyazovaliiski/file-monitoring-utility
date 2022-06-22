@@ -20,7 +20,7 @@
     "better-queue": "^3.8.10",
     "dotenv": "^8.2.0",
     "sequelize": "^6.2.4",
-    "sqlite3": "^5.0.0",
+    "sqlite3": "^5.0.3",
     "typescript": "^3.9.6",
     "watchr": "^6.4.0",
     "xml-parser": "^1.2.1"
